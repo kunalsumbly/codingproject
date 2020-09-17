@@ -5,12 +5,11 @@ import java.util.Stack;
 
 public class BalancedBrackets {
   
-  private static Stack<Character> containerStack = new Stack<Character>();
-  private static Stack<Character> tempStack = new Stack<Character>();
-  private static Stack<Character> matchNotFound = new Stack<Character>();
-  private static HashMap<Character,Character> bracketMap = new HashMap();
-  private static boolean isBalancedString = false;
-  private static HashMap errorCode = new HashMap();
+  private  Stack<Character> containerStack = new Stack<Character>();
+  private  Stack<Character> tempStack = new Stack<Character>();
+  private  Stack<Character> matchNotFound = new Stack<Character>();
+  private  static HashMap<Character,Character> bracketMap = new HashMap();
+  private  boolean isBalancedString = false;
   
   static {
     
@@ -23,27 +22,15 @@ public class BalancedBrackets {
     
   }
   
-  //private static String INPUT_STRING = "()[]{}";
-  //private static String INPUT_STRING = "((()))[]{}";
-  //private static String INPUT_STRING = "()[]{}(([])){[()][]}";
-  private static String INPUT_STRING = "(((({[[}))))";
-  
-  public static void main(String[] args) {
-    if (validateBalancedString()) {
-      System.out.println("String is balanced");
-    } else {
-      System.out.println("String is not balanced");
-    }
-  }
 
-  private static boolean validateBalancedString() {
+  public boolean validateBalancedString(String inputString) {
     try {
-      if (INPUT_STRING.length() % 2 != 0) {
+      if (inputString.length() % 2 != 0) {
         throw new RuntimeException();
       }
 
-      for (int i = 0; i < INPUT_STRING.length(); i++) {
-        containerStack.push(INPUT_STRING.charAt(i));
+      for (int i = 0; i < inputString.length(); i++) {
+        containerStack.push(inputString.charAt(i));
       }
 
       while (!containerStack.isEmpty()) {
