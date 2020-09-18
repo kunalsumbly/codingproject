@@ -9,8 +9,11 @@ import java.util.Stack;
  *
  */
 public class BalancedBrackets {
-
+  
+  //This stack is used to push opening brackets and pop when encountering closing brackets
   private Stack<Character> containerStack = new Stack<Character>();
+  
+  //This map is used to keep the track of bracket pairs
   private static HashMap<Character, Character> openingBracketsMap = new HashMap();
 
   static {
