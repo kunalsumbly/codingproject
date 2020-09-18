@@ -6,77 +6,53 @@ import java.util.Stack;
 public class BalancedBrackets {
   
   private  Stack<Character> containerStack = new Stack<Character>();
-  private  Stack<Character> tempStack = new Stack<Character>();
-  private  Stack<Character> matchNotFound = new Stack<Character>();
-  private  static HashMap<Character,Character> bracketMap = new HashMap();
-  private  boolean isBalancedString = false;
+  private  static HashMap<Character,Character> openingBracketsMap = new HashMap();
   
   static {
     
-    bracketMap.put('(', ')');
-    bracketMap.put('{', '}');
-    bracketMap.put('[', ']');
-    bracketMap.put(')', '(');
-    bracketMap.put('}', '{');
-    bracketMap.put(']', '[');
-    
+    openingBracketsMap.put('(', ')');
+    openingBracketsMap.put('{', '}');
+    openingBracketsMap.put('[', ']');
   }
   
-
+  /**
+   * This method validates the input string to check if the string is balanced or not
+   * @param inputString
+   * @return
+   */
   public boolean validateBalancedString(String inputString) {
+    boolean isBalancedString = false;
     try {
+      
       if (inputString.length() % 2 != 0) {
         throw new RuntimeException();
       }
 
+      /**
+       * when we face the opening bracket push it to the stack when we see an closing brace , pop
+       * the stack and match them
+       */
       for (int i = 0; i < inputString.length(); i++) {
-        containerStack.push(inputString.charAt(i));
-      }
-
-      while (!containerStack.isEmpty()) {
-        tempStack.push(containerStack.pop());
-      }
-
-      char current = ' ', target;
-      while (!tempStack.isEmpty()) {
-        if (current == ' ') {
-          current = tempStack.pop();
-        }
-        // check if current is the matching pair for the char in the matchNotFound stack
-        if (!matchNotFound.isEmpty()) {
-          Character readNotFound = matchNotFound.peek();
-          Character object = bracketMap.get(readNotFound);
-          if (object.equals(current)) {
-            matchNotFound.pop(); // pop the stack , as the matching pair was found
-            current = ' ';
-            continue;
+        if (openingBracketsMap.get(inputString.charAt(i)) != null) {// the case when we have opening
+                                                                    // brackets
+          containerStack.push(inputString.charAt(i));
+        } else {// case when we have closing bracket
+          if (!containerStack.isEmpty()) {
+            Character pop = containerStack.pop();
+            if (openingBracketsMap.get(pop) == inputString.charAt(i)) {
+              isBalancedString = true;
+            }
           }
         }
-        // pop the next one
-        if (tempStack.isEmpty()) {
-          break;
-        }
-        target = tempStack.pop();
-        if (bracketMap.get(current).equals(target)) {
-          isBalancedString = true;
-          current = ' ';
-        } else {
-          matchNotFound.push(current);
-          current = target;
-          isBalancedString = false;
-        }
+      }
 
-      } // while ends
-
-      if (!matchNotFound.isEmpty()) {
+      if (!containerStack.isEmpty()) {
         isBalancedString = false;
       }
 
-      return isBalancedString;
-    } catch (RuntimeException ex) {
+    } catch (Exception ex) {
       isBalancedString = false;
-    } finally {
-    return isBalancedString;
     }
+    return isBalancedString;
   }
 }

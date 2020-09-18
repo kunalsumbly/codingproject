@@ -37,5 +37,18 @@ public class BalancedBracketsTest {
     String inputString = "()[]{}(([])){[()][]}";
    Assert.assertTrue( balancedBrackets.validateBalancedString(inputString));
   }
+  
+  @Test
+  public void testEbalancedCase() {
+    balancedBrackets = new BalancedBrackets();
+    String inputString = "()[]{}(([])){[()][]}((((()))))";
+   Assert.assertTrue( balancedBrackets.validateBalancedString(inputString));
+  }
 
+  @Test
+  public void testFunbalancedCase() {
+    balancedBrackets = new BalancedBrackets();
+    String inputString = "()[]{}(([])){[()][]}((((([[[[[[[[[[)))))))))))))";
+   Assert.assertFalse( balancedBrackets.validateBalancedString(inputString));
+  }
 }
