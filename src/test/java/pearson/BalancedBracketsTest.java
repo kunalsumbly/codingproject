@@ -50,6 +50,7 @@ public class BalancedBracketsTest {
     balancedBrackets = new BalancedBrackets();
     String inputString = "()[]{}(([])){[()][]}((((([[[[[[[[[[)))))))))))))";
     //String inputString = "[(])";
+    //String inputString = "][}{";
    Assert.assertFalse( balancedBrackets.validateBalancedString(inputString));
   }
 }

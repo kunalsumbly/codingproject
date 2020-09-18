@@ -24,7 +24,7 @@ public class BalancedBrackets {
    * This method validates the input string to check if the string is balanced or not
    * 
    * @param inputString
-   * @return
+   * @return true for balanced string and false otherwise
    */
   public boolean validateBalancedString(String inputString) {
     boolean isBalancedString = false;
@@ -35,6 +35,7 @@ public class BalancedBrackets {
       isBalancedString = processInputString(inputString, true, 0);
 
     } catch (Exception ex) {
+      // exception can be logged to an error log
       isBalancedString = false;
     }
     return isBalancedString;
@@ -68,14 +69,12 @@ public class BalancedBrackets {
     if (openingBracketsMap.get(inputString.charAt(currentIndex)) != null) {// the case when we encounter opening brackets
       containerStack.push(inputString.charAt(currentIndex));
     } else {// case when we encounter closing bracket
-      if (!containerStack.isEmpty()) {
         Character pop = containerStack.pop();
         if (openingBracketsMap.get(pop) == inputString.charAt(currentIndex)) {
           isBalancedString = true;
         } else {
           isBalancedString = false;
         }
-      }
     }
     return isBalancedString;
   }
