@@ -3,55 +3,79 @@ package pearson;
 import java.util.HashMap;
 import java.util.Stack;
 
+/**
+ * This class handles the logic of Balancing brackets
+ * @author kusu
+ *
+ */
 public class BalancedBrackets {
-  
-  private  Stack<Character> containerStack = new Stack<Character>();
-  private  static HashMap<Character,Character> openingBracketsMap = new HashMap();
-  
+
+  private Stack<Character> containerStack = new Stack<Character>();
+  private static HashMap<Character, Character> openingBracketsMap = new HashMap();
+
   static {
-    
+
     openingBracketsMap.put('(', ')');
     openingBracketsMap.put('{', '}');
     openingBracketsMap.put('[', ']');
   }
-  
+
   /**
    * This method validates the input string to check if the string is balanced or not
+   * 
    * @param inputString
    * @return
    */
   public boolean validateBalancedString(String inputString) {
     boolean isBalancedString = false;
     try {
-      
       if (inputString.length() % 2 != 0) {
         throw new RuntimeException();
       }
-
-      /**
-       * when we face the opening bracket push it to the stack when we see an closing brace , pop
-       * the stack and match them
-       */
-      for (int i = 0; i < inputString.length(); i++) {
-        if (openingBracketsMap.get(inputString.charAt(i)) != null) {// the case when we have opening
-                                                                    // brackets
-          containerStack.push(inputString.charAt(i));
-        } else {// case when we have closing bracket
-          if (!containerStack.isEmpty()) {
-            Character pop = containerStack.pop();
-            if (openingBracketsMap.get(pop) == inputString.charAt(i)) {
-              isBalancedString = true;
-            }
-          }
-        }
-      }
-
-      if (!containerStack.isEmpty()) {
-        isBalancedString = false;
-      }
+      isBalancedString = processInputString(inputString, true, 0);
 
     } catch (Exception ex) {
       isBalancedString = false;
+    }
+    return isBalancedString;
+  }
+
+  /**
+   * This function iterates through the inputstring in a recursive way
+   * @param inputString
+   * @param isBalancedString
+   * @param currentIndex
+   * @return
+   */
+  private boolean processInputString(String inputString, boolean isBalancedString, int currentIndex) {
+    if (currentIndex == inputString.length()) {
+      return !containerStack.isEmpty() ? false : isBalancedString;
+    } else {
+      isBalancedString = process(inputString, isBalancedString, currentIndex);
+      currentIndex++;
+      return processInputString(inputString, isBalancedString, currentIndex);
+    }
+  }
+
+  /**
+   * The logic to process the input string to check for balanced string
+   * @param inputString
+   * @param isBalancedString
+   * @param currentIndex
+   * @return
+   */
+  private boolean process(String inputString, boolean isBalancedString, int currentIndex) {
+    if (openingBracketsMap.get(inputString.charAt(currentIndex)) != null) {// the case when we encounter opening brackets
+      containerStack.push(inputString.charAt(currentIndex));
+    } else {// case when we encounter closing bracket
+      if (!containerStack.isEmpty()) {
+        Character pop = containerStack.pop();
+        if (openingBracketsMap.get(pop) == inputString.charAt(currentIndex)) {
+          isBalancedString = true;
+        } else {
+          isBalancedString = false;
+        }
+      }
     }
     return isBalancedString;
   }

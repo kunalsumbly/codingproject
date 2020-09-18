@@ -13,7 +13,7 @@ public class BalancedBracketsTest {
   @Test
   public void testAsimpleValidCase() {
     balancedBrackets = new BalancedBrackets();
-    String inputString = "()[]{}";
+    String inputString = "(((((((((((((((((((())))))))))))))))))))[]{}";
    Assert.assertTrue( balancedBrackets.validateBalancedString(inputString));
   }
   
@@ -49,6 +49,7 @@ public class BalancedBracketsTest {
   public void testFunbalancedCase() {
     balancedBrackets = new BalancedBrackets();
     String inputString = "()[]{}(([])){[()][]}((((([[[[[[[[[[)))))))))))))";
+    //String inputString = "[(])";
    Assert.assertFalse( balancedBrackets.validateBalancedString(inputString));
   }
 }
