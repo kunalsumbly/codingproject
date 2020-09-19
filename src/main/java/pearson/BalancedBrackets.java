@@ -32,7 +32,7 @@ public class BalancedBrackets {
   public boolean validateBalancedString(String inputString) {
     boolean isBalancedString = false;
     try {
-      if (inputString.length() % 2 != 0) {
+      if (inputString.length() % 2 != 0) { // if the string length is odd we know it is not balanced
         throw new RuntimeException();
       }
       isBalancedString = processInputString(inputString, true, 0);
