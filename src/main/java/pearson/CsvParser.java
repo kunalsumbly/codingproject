@@ -25,8 +25,7 @@ public class CsvParser {
     List<String> matchList = new ArrayList<>();
     Matcher m = p.matcher(line);
     while (m.find()) {
-      String group = m.group();
-      matchList.add(group);
+      matchList.add(m.group());
     }
     return matchList;
   }

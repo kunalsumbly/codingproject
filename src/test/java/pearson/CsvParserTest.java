@@ -19,12 +19,14 @@ public class CsvParserTest {
   public void testA() {
     String line = "\",\",1,2,3,\",,,\",\"hoge\"\"hoge\",abc,\"\"";
     assertEquals(8, csvParser.find(line).size());
+    // just to adhere to the guidelines also printing out the output here
     csvParser.find(line).stream().forEach(s-> System.out.println(s));
   }
   
   @Test
   public void testB() {
     String line =  "1,\"Que?\",\"Kay?\",2,\"Si.\",\"Sea? Kay, sea?\",\"No, no, no. Que... ‘what’.\",234,\"Kay Watt?\",\"Si, que ‘what’.\",\"C.K. Watt?\",3,\"Yes!\",\"comma,comma, comma , :)\"";
+    // just to adhere to the guidelines also printing out the output here
     csvParser.find(line).stream().forEach(s-> System.out.println(s));
     assertEquals(14, csvParser.find(line).size());
   }
@@ -32,6 +34,7 @@ public class CsvParserTest {
   @Test
   public void testC() {
     String line = "2,6,3,2,5";
+    // just to adhere to the guidelines also printing out the output here
     csvParser.find(line).stream().forEach(s-> System.out.println(s));
     assertEquals(5, csvParser.find(line).size());
   }
@@ -39,6 +42,7 @@ public class CsvParserTest {
   @Test
   public void testD() {
     String line ="\"pears\",\"apples\",\"walnuts\",\"grapes\",\"cheese,cake\"";
+    // just to adhere to the guidelines also printing out the output here
     csvParser.find(line).stream().forEach(s-> System.out.println(s));
     assertEquals(5, csvParser.find(line).size());
   }
