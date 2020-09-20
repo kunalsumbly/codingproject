@@ -17,7 +17,6 @@ public class TimeConfusion {
       // basic input check
       validateInputs(numOfCases, timeSamples);
       for (String timeEntry : timeSamples) {
-        int counter =0;
         String[] split = timeEntry.split(" ");
         List<String> asList = Arrays.asList(split);
         int size = asList.size();
@@ -80,7 +79,7 @@ public class TimeConfusion {
     if (until1 == until2) {
       correctWatch.put(time1,time1+"is the correct time" );
     }
-    // adding 12h+b
+    // adding 12h+b to cover the other side of the diff
     b = b.plusHours(12);
     
     until1 = Math.abs(a.until(b, ChronoUnit.MINUTES)); 
@@ -88,7 +87,7 @@ public class TimeConfusion {
     if (until1 == until2) {
       correctWatch.put(time1,time1+"is the correct time" );
     }
-    // adding 12h+c
+    // adding 12h+c to cover the other side of the diff
     c = c.plusHours(12);
     until2 = Math.abs(c.until(a, ChronoUnit.MINUTES));
     
