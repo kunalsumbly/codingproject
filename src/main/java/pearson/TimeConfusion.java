@@ -1,43 +1,42 @@
 package pearson;
 
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class TimeConfusion {
-  DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm");
   
-  Map<String, Boolean> correctWatch = new HashMap();
+  Map<String, String> correctWatch = new HashMap();
 
-  public List<String> determineActualTime(int numOfCases, List<String> timeSamples) {
-    List<String> responseList = new ArrayList();
+  public void determineActualTime(int numOfCases, List<String> timeSamples) {
     try {
       // basic input check
       validateInputs(numOfCases, timeSamples);
       for (String timeEntry : timeSamples) {
+        int counter =0;
         String[] split = timeEntry.split(" ");
         List<String> asList = Arrays.asList(split);
         int size = asList.size();
         try {
-          permute(asList, 0, size - 1);
+          correctWatch.clear();
+          processCalculations(asList, 0, size - 1,false,counter);
+          if (correctWatch.keySet().size() > 1 || correctWatch.keySet().size() ==0) {
+            System.out.println("Correct Time for entries->"+timeEntry+"=Look at the sun");
+          }else  { 
+          System.out.println("Correct Time for entries->"+timeEntry+"is="+correctWatch.keySet());
+          }
         }catch (Exception ex) {
-          correctWatch.put(timeEntry, false);
         }
       }
-      System.out.println(correctWatch);
+     // System.out.println(correctWatch);
     } catch (Exception ex) {
       // log.error("failed in validation step"+ex.getMessage());
-      responseList.add(ex.getMessage());
-    } finally {
-      return responseList;
-    }
+    } 
   }
 
   private void validateInputs(int numOfCases, List<String> timeSamples) {
@@ -48,19 +47,18 @@ public class TimeConfusion {
 
   }
   
-  public  void permute(List<String> list, int left, int right) {
+  public void processCalculations(List<String> list, int left, int right, boolean matchFound, int counter) {
     if (left == right) {
-      calculateTimeDifferenceForAllPermutations(list);
+      counter = findTimeDifferenceForAllPermutations(list,counter);
     }
     for (int j = left; j <= right; j++) {
         Collections.swap(list, left, j);
-        permute(list, left + 1, right);
+         processCalculations(list, left + 1, right, matchFound, counter);
         Collections.swap(list, left, j);
     }
 }
 
-  private void calculateTimeDifferenceForAllPermutations(List<String> list) {
-    int correctTimeFoundCounter = 0;
+  private int findTimeDifferenceForAllPermutations(List<String> list, int correctTimeFoundCounter) {
     String time1 = list.get(0);
     String time2 = list.get(1);
     String time3 = list.get(2);
@@ -81,7 +79,8 @@ public class TimeConfusion {
     
     // c->a->b  
     if (until1 == until2) {
-      setCorrectTimeValue(time1);
+      correctTimeFoundCounter++;
+      correctWatch.put(time1,time1+"is the correct time" );
     }
     // adding 12h+b
     b = b.plusHours(12);
@@ -89,23 +88,22 @@ public class TimeConfusion {
     until1 = Math.abs(a.until(b, ChronoUnit.MINUTES)); 
     
     if (until1 == until2) {
-      setCorrectTimeValue(time1);
+      correctTimeFoundCounter++;
+      correctWatch.put(time1,time1+"is the correct time" );
     }
     // adding 12h+c
     c = c.plusHours(12);
     until2 = Math.abs(c.until(a, ChronoUnit.MINUTES));
+    
     if (until1 == until2) {
-      setCorrectTimeValue(time1);
+      correctTimeFoundCounter++;
+      correctWatch.put(time1,time1+"is the correct time" );
     }
     
-    System.out.println(Arrays.toString(list.toArray()));
+    //System.out.println(Arrays.toString(list.toArray()));
+    return correctTimeFoundCounter;
+    
   }
   
-  private void setCorrectTimeValue(String time) {
-    if (correctWatch.get(time) == null) {
-      correctWatch.put(time, true);
-    } 
-
-  }
 
 }

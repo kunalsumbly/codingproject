@@ -24,7 +24,7 @@ public class TimeConfusionTest {
     timeSamples.add("5:00 11:00 10:00");
     timeSamples.add("11:59 12:30 1:01");
      timeSamples.add("12:00 4:00 8:00"); 
-    timeConfusion.determineActualTime(numberOfCases,timeSamples).forEach(System.out::println);
+    timeConfusion.determineActualTime(numberOfCases,timeSamples);
   }
 
 }
