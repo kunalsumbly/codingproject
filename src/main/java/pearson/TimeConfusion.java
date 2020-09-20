@@ -2,7 +2,6 @@ package pearson;
 
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,7 +23,7 @@ public class TimeConfusion {
         int size = asList.size();
         try {
           correctWatch.clear();
-          processCalculations(asList, 0, size - 1,false,counter);
+          processCalculations(asList, 0, size - 1);
           if (correctWatch.keySet().size() > 1 || correctWatch.keySet().size() ==0) {
             System.out.println("Correct Time for entries->"+timeEntry+"=Look at the sun");
           }else  { 
@@ -47,18 +46,18 @@ public class TimeConfusion {
 
   }
   
-  public void processCalculations(List<String> list, int left, int right, boolean matchFound, int counter) {
+  public void processCalculations(List<String> list, int left, int right) {
     if (left == right) {
-      counter = findTimeDifferenceForAllPermutations(list,counter);
+       findTimeDifferenceForAllPermutations(list);
     }
     for (int j = left; j <= right; j++) {
         Collections.swap(list, left, j);
-         processCalculations(list, left + 1, right, matchFound, counter);
+         processCalculations(list, left + 1, right);
         Collections.swap(list, left, j);
     }
 }
 
-  private int findTimeDifferenceForAllPermutations(List<String> list, int correctTimeFoundCounter) {
+  private void findTimeDifferenceForAllPermutations(List<String> list) {
     String time1 = list.get(0);
     String time2 = list.get(1);
     String time3 = list.get(2);
@@ -79,7 +78,6 @@ public class TimeConfusion {
     
     // c->a->b  
     if (until1 == until2) {
-      correctTimeFoundCounter++;
       correctWatch.put(time1,time1+"is the correct time" );
     }
     // adding 12h+b
@@ -88,7 +86,6 @@ public class TimeConfusion {
     until1 = Math.abs(a.until(b, ChronoUnit.MINUTES)); 
     
     if (until1 == until2) {
-      correctTimeFoundCounter++;
       correctWatch.put(time1,time1+"is the correct time" );
     }
     // adding 12h+c
@@ -96,12 +93,10 @@ public class TimeConfusion {
     until2 = Math.abs(c.until(a, ChronoUnit.MINUTES));
     
     if (until1 == until2) {
-      correctTimeFoundCounter++;
       correctWatch.put(time1,time1+"is the correct time" );
     }
     
     //System.out.println(Arrays.toString(list.toArray()));
-    return correctTimeFoundCounter;
     
   }
   
