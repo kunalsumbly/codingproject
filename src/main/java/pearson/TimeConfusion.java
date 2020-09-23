@@ -10,31 +10,21 @@ import java.util.Map;
 
 public class TimeConfusion {
   
-  Map<String, String> correctWatch = new HashMap();
+  Map<String, String> correctWatch = new HashMap<String, String>();
 
-  public void determineActualTime(int numOfCases, List<String> timeSamples) {
-    try {
+  public  Map<String, String> determineActualTime(int numOfCases, List<String> timeSamples) {
       // basic input check
       validateInputs(numOfCases, timeSamples);
-      for (String timeEntry : timeSamples) {
-        String[] split = timeEntry.split(" ");
+      timeSamples.stream().forEach(s-> {
+        String[] split = s.split(" ");
         List<String> asList = Arrays.asList(split);
         int size = asList.size();
-        try {
-          correctWatch.clear();
-          processCalculations(asList, 0, size - 1);
-          if (correctWatch.keySet().size() > 1 || correctWatch.keySet().size() ==0) {
-            System.out.println("Correct Time for entries->"+timeEntry+"=Look at the sun");
-          }else  { 
-          System.out.println("Correct Time for entries->"+timeEntry+"is="+correctWatch.keySet());
-          }
-        }catch (Exception ex) {
-        }
-      }
-     // System.out.println(correctWatch);
-    } catch (Exception ex) {
-      // log.error("failed in validation step"+ex.getMessage());
-    } 
+        correctWatch.clear();
+        processCalculations(asList, 0, size - 1);
+        
+      });
+      
+    return correctWatch; 
   }
 
   private void validateInputs(int numOfCases, List<String> timeSamples) {
@@ -94,8 +84,6 @@ public class TimeConfusion {
     if (until1 == until2) {
       correctWatch.put(time1,time1+"is the correct time" );
     }
-    
-    //System.out.println(Arrays.toString(list.toArray()));
     
   }
   

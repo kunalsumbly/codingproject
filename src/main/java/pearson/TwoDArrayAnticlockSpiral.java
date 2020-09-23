@@ -3,12 +3,18 @@ package pearson;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TwoDArrayAnticlockDown {
+public class TwoDArrayAnticlockSpiral {
+  int dirs[][] = {
+      {0, -1}, // up 
+      {-1, 0}, // left
+      {0, 1}, // down
+      {1, 0} // right
+  };
 
   // function to print the
   // required traversal
-  static List counterClockspiralPrint(int maxRows, int maxColumns, int startRow, int startColumn) {
-    int dirs[][] = {{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
+  public  List<Integer> counterClockSpiral(int maxRows, int maxColumns, int startRow, int startColumn) {
+    
     
     // movement x - axis is column movement
     int xAxis = startColumn - 1;
@@ -41,19 +47,10 @@ public class TwoDArrayAnticlockDown {
             result.add(xAxis + yAxis * maxColumns + 1);
           }
         }
-
-
       }
       i++;
     }
     return result;
-  }
-
-  // Driver Code
-  public static void main(String[] args) {
-    // Function calling 10
-    System.out.println(counterClockspiralPrint(5, 5, 3, 2));
-    //System.out.println(counterClockspiralPrint(2,4, 1, 2));
   }
 
 }
