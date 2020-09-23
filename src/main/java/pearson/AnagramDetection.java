@@ -1,10 +1,13 @@
 package pearson;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class AnagramDetection {
-  private int counter = 0;
+  
+  // just to be thread safe
+  private AtomicInteger counter = new AtomicInteger(0);
   
   public  int findAnagramCount(String queryString, String parentString) {
     String querySortedString = Stream.of(queryString.split("")).sorted().collect(Collectors.joining());
@@ -12,10 +15,9 @@ public class AnagramDetection {
        String substring = parentString.substring(index, index + queryString.length());
        String collect = Stream.of(substring.split("")).sorted().collect(Collectors.joining());
        if (collect.equals(querySortedString)) {
-          counter++;
+          counter.incrementAndGet();
        }
      }
-     return counter;
+     return counter.get();
   }
-
 }

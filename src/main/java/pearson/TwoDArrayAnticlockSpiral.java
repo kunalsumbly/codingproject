@@ -11,11 +11,7 @@ public class TwoDArrayAnticlockSpiral {
       {1, 0} // right
   };
 
-  // function to print the
-  // required traversal
   public  List<Integer> counterClockSpiral(int maxRows, int maxColumns, int startRow, int startColumn) {
-    
-    
     // movement x - axis is column movement
     int xAxis = startColumn - 1;
     // movement y-axis is row movement
@@ -32,7 +28,7 @@ public class TwoDArrayAnticlockSpiral {
     }
 
     int i = 0;
-    List result = new ArrayList();
+    List<Integer> result = new ArrayList<Integer>();
     result.add(xAxis + (yAxis * maxColumns) + 1);
 
     while (result.size() < size) {
